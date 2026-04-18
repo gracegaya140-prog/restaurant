@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>⚜ L'EMPIRE | Expérience 3D Gastronomique</title>
 
   <!-- Polices premium -->
@@ -28,10 +28,10 @@
       background-color: var(--dark);
       color: #fff;
       overflow-x: hidden;
-      perspective: 1200px; /* Pour effets 3D globaux */
+      perspective: 1200px;
     }
 
-    /* Fond animé 3D luxueux */
+    /* Fond animé 3D luxueux (adapté) */
     body::before {
       content: "";
       position: fixed;
@@ -51,22 +51,23 @@
     /* Contenu principal au-dessus du fond */
     nav, .hero, section, footer { position: relative; z-index: 10; }
 
-    /* ---------- NAVIGATION avec 3D ---------- */
+    /* ---------- NAVIGATION responsive 3D ---------- */
     nav {
       position: fixed;
       width: 100%;
-      padding: 30px 5%;
+      padding: 25px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
       transition: 0.4s;
       transform-style: preserve-3d;
+      flex-wrap: wrap;
     }
     nav.scrolled {
-      background: rgba(5,5,5,0.9);
+      background: rgba(5,5,5,0.95);
       backdrop-filter: blur(15px);
-      padding: 15px 5%;
+      padding: 12px 5%;
       border-bottom: 1px solid var(--gold);
       box-shadow: 0 10px 30px rgba(0,0,0,0.8);
       transform: translateZ(20px);
@@ -74,14 +75,15 @@
     .logo {
       font-family: 'Playfair Display', serif;
       color: var(--gold);
-      font-size: 2.5rem;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
       text-decoration: none;
       text-shadow: 0 0 20px rgba(212,175,55,0.6);
       transition: 0.3s;
       transform-style: preserve-3d;
+      white-space: nowrap;
     }
     .logo:hover { transform: translateZ(30px) rotateX(2deg); }
-    .nav-links { display: flex; list-style: none; gap: 35px; }
+    .nav-links { display: flex; list-style: none; gap: clamp(15px, 4vw, 35px); flex-wrap: wrap; justify-content: center; }
     .nav-links li a {
       color: #fff;
       text-decoration: none;
@@ -90,14 +92,16 @@
       padding-bottom: 5px;
       border-bottom: 1px solid transparent;
       transition: 0.3s;
+      font-size: clamp(0.9rem, 3vw, 1rem);
     }
     .nav-links li a:hover { color: var(--gold); border-bottom-color: var(--gold); transform: translateY(-2px); }
 
-    /* ---------- HERO avec effet 3D parallaxe ---------- */
+    /* ---------- HERO avec effet 3D parallaxe (responsive) ---------- */
     .hero {
       height: 100vh;
-      min-height: 750px;
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2') center/cover no-repeat fixed;
+      min-height: 650px;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2') center/cover no-repeat fixed;
+      background-attachment: fixed;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -107,6 +111,7 @@
     .hero-content {
       transform: translateZ(50px) scale(0.98);
       animation: floatHero 6s ease-in-out infinite;
+      padding: 0 20px;
     }
     @keyframes floatHero {
       0%,100% { transform: translateZ(50px) translateY(0); }
@@ -114,10 +119,10 @@
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 6rem;
+      font-size: clamp(2.5rem, 10vw, 6rem);
       font-weight: 700;
       text-shadow: 5px 5px 20px #000;
-      letter-spacing: 12px;
+      letter-spacing: clamp(5px, 2vw, 12px);
     }
     .hero span {
       color: var(--gold);
@@ -129,15 +134,19 @@
       from { text-shadow: 0 0 10px gold; }
       to { text-shadow: 0 0 30px #D4AF37, 0 0 10px #ffd700; }
     }
-    .hero p { font-size: 1.5rem; letter-spacing: 6px; margin-top: 20px; }
+    .hero p { 
+      font-size: clamp(1rem, 4vw, 1.5rem); 
+      letter-spacing: clamp(2px, 1.5vw, 6px); 
+      margin-top: 20px;
+    }
 
-    /* Titres de section 3D */
+    /* Titres de section 3D responsive */
     .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3.8rem;
+      font-size: clamp(2rem, 7vw, 3.8rem);
       color: var(--gold);
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
       position: relative;
       transform-style: preserve-3d;
       transform: perspective(800px) rotateX(2deg);
@@ -145,21 +154,24 @@
     .section-title:after {
       content: "";
       display: block;
-      width: 130px; height: 3px;
+      width: min(130px, 30vw);
+      height: 3px;
       background: var(--gold);
       margin: 20px auto 0;
       box-shadow: 0 0 15px gold;
     }
 
-    /* ---------- GALERIE RESTAURANT (3 photos) avec cartes 3D ---------- */
-    .resto-section { padding: 120px 5%; background: #0c0c0c; }
+    /* ---------- GALERIE RESTAURANT (3 photos) responsive grid ---------- */
+    .resto-section { padding: 80px 5%; background: #0c0c0c; }
     .resto-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
     }
     .resto-card {
-      height: 500px;
+      height: auto;
+      min-height: 350px;
+      aspect-ratio: 4 / 3;
       border-radius: 30px;
       overflow: hidden;
       box-shadow: 0 30px 40px -10px black;
@@ -179,15 +191,16 @@
     }
     .resto-card:hover img { transform: scale(1.1); }
 
-    /* ---------- CLIENTS GALERIE (8 photos) avec flip 3D ---------- */
-    .clients-section { padding: 100px 5%; background: #0f0f0f; }
+    /* ---------- CLIENTS GALERIE (8 photos) responsive : 2 -> 4 colonnes ---------- */
+    .clients-section { padding: 80px 5%; background: #0f0f0f; }
     .clients-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
       gap: 25px;
     }
     .client-card {
-      height: 340px;
+      height: auto;
+      aspect-ratio: 3 / 4;
       border-radius: 25px;
       overflow: hidden;
       position: relative;
@@ -209,22 +222,35 @@
       padding: 30px 15px 15px;
       color: white;
       transform: translateZ(20px);
-      opacity: 0.9;
+      opacity: 0.95;
       font-weight: 500;
+      font-size: clamp(0.8rem, 3vw, 1rem);
+      text-align: center;
     }
     .client-overlay i { color: var(--gold); margin-right: 8px; }
 
-    /* ---------- SLIDER PRO 3D ---------- */
-    .pro-slider { padding: 100px 5%; background: #050505; overflow: hidden; }
+    /* ---------- SLIDER PRO 3D (responsive, défilement adapté) ---------- */
+    .pro-slider { padding: 80px 5%; background: #050505; overflow: hidden; }
+    .title-pro {
+      color: var(--gold); 
+      font-size: clamp(2rem, 6vw, 3rem); 
+      text-align: center; 
+      margin-bottom: 40px;
+      font-family: 'Playfair Display', serif;
+    }
     .slider-track {
       display: flex;
-      width: calc(300px * 14);
+      width: calc(280px * 14);
       animation: slide3D 40s linear infinite;
       transform-style: preserve-3d;
     }
     .slider-track img {
-      width: 300px; height: 220px; margin-right: 25px;
-      border-radius: 25px; object-fit: cover;
+      width: clamp(200px, 28vw, 280px);
+      height: auto;
+      aspect-ratio: 4 / 3;
+      margin-right: 20px;
+      border-radius: 25px;
+      object-fit: cover;
       box-shadow: 10px 20px 30px #000;
       border: 1px solid #3e3e3e;
       transition: 0.4s;
@@ -240,8 +266,8 @@
       100% { transform: translateX(-50%) rotateY(0deg); }
     }
 
-    /* ---------- FORMULAIRE TRANSPARENT 3D ---------- */
-    .order-section { padding: 120px 5%; }
+    /* ---------- FORMULAIRE TRANSPARENT 3D (responsive) ---------- */
+    .order-section { padding: 80px 5%; }
     .form-3d-container {
       max-width: 1400px; margin: 0 auto;
       background: rgba(10, 10, 10, 0.55);
@@ -249,7 +275,7 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(212, 175, 55, 0.45);
       border-radius: 50px;
-      padding: 60px 60px;
+      padding: clamp(30px, 5vw, 60px) clamp(20px, 5vw, 60px);
       box-shadow: 0 40px 70px rgba(0,0,0,0.9), inset 0 0 40px rgba(212,175,55,0.05);
       transform-style: preserve-3d;
       transform: perspective(1200px) rotateX(1deg);
@@ -259,12 +285,21 @@
       transform: perspective(1200px) rotateX(0.5deg) translateZ(15px);
       box-shadow: 0 50px 80px black, 0 0 50px rgba(212,175,55,0.15);
     }
-    .form-title { font-size: 3rem; color: var(--gold); margin-bottom: 40px; }
-    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-    .input-group label { color: var(--gold); margin-bottom: 8px; display: block; }
+    .form-title { 
+      font-size: clamp(1.8rem, 6vw, 3rem); 
+      color: var(--gold); 
+      margin-bottom: 30px; 
+      text-align: center;
+    }
+    .form-grid-2 { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 30px; 
+    }
+    .input-group label { color: var(--gold); margin-bottom: 8px; display: block; font-size: 0.95rem; }
     .input-group input, .input-group select, .input-group textarea {
-      width: 100%; padding: 18px 22px;
-      background: rgba(20,20,20,0.8);
+      width: 100%; padding: 14px 20px;
+      background: rgba(20,20,20,0.85);
       border: 1px solid rgba(212,175,55,0.3);
       border-radius: 30px;
       color: white;
@@ -278,26 +313,124 @@
       outline: none;
       transform: scale(1.01);
     }
-    .full-width { grid-column: span 2; }
+    .full-width { grid-column: 1 / -1; }
     .btn-3d {
       background: var(--gold); border: none;
-      padding: 22px 50px; font-size: 1.6rem; font-weight: bold;
-      border-radius: 60px; cursor: pointer;
-      transition: 0.3s; letter-spacing: 5px;
+      padding: 16px 30px;
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-weight: bold;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.3s;
+      letter-spacing: 3px;
       box-shadow: 0 15px 25px #00000080;
       transform-style: preserve-3d;
       transform: perspective(600px) rotateX(0deg);
       margin-top: 40px;
-      width: fit-content;
+      width: 100%;
+      max-width: 350px;
+      display: inline-block;
     }
     .btn-3d:hover {
       background: #f5d654;
       transform: perspective(600px) rotateX(5deg) translateZ(15px);
       box-shadow: 0 20px 35px black, 0 0 30px gold;
     }
+    footer {
+      background: #030303; 
+      padding: 30px 20px; 
+      text-align: center; 
+      border-top: 1px solid #2a2a2a;
+      font-size: clamp(0.8rem, 3vw, 1rem);
+    }
+    footer p i { margin: 0 8px; color: var(--gold); }
 
-    /* Footer */
-    footer { background: #030303; padding: 40px; text-align: center; border-top: 1px solid #2a2a2a; }
+    /* RESPONSIVE : ajustements supplémentaires pour tablettes et mobiles */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 12px;
+        background: rgba(5,5,5,0.85);
+        backdrop-filter: blur(12px);
+        padding: 15px 5% !important;
+      }
+      nav.scrolled {
+        padding: 10px 5% !important;
+      }
+      .nav-links {
+        gap: 18px;
+      }
+      .hero {
+        background-attachment: scroll; /* meilleur rendu mobile */
+      }
+      .resto-card {
+        min-height: 280px;
+      }
+      .client-card {
+        aspect-ratio: 3 / 4;
+      }
+      .form-grid-2 {
+        gap: 20px;
+      }
+      .btn-3d {
+        width: 100%;
+        max-width: 100%;
+      }
+      .section-title {
+        margin-bottom: 30px;
+      }
+      .slider-track img {
+        width: 200px;
+        margin-right: 15px;
+      }
+      .slider-track {
+        width: calc(200px * 14);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        letter-spacing: 3px;
+      }
+      .hero p {
+        letter-spacing: 2px;
+      }
+      .resto-card {
+        border-radius: 20px;
+      }
+      .client-card {
+        border-radius: 18px;
+      }
+      .form-3d-container {
+        border-radius: 30px;
+        padding: 25px 20px;
+      }
+      .input-group input, .input-group select, .input-group textarea {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+      .btn-3d {
+        padding: 14px 20px;
+        font-size: 1.2rem;
+      }
+      .client-overlay {
+        padding: 15px 10px 10px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Correction perspective sur petits écrans pour éviter débordements */
+    @media (max-width: 900px) {
+      .resto-card:hover {
+        transform: perspective(800px) rotateY(3deg) translateZ(20px);
+      }
+      .client-card:hover {
+        transform: rotateY(4deg) rotateX(2deg) translateZ(15px);
+      }
+      .form-3d-container:hover {
+        transform: perspective(1000px) rotateX(0.3deg) translateZ(8px);
+      }
+    }
   </style>
 </head>
 <body>
@@ -353,7 +486,7 @@
 
 <!-- SLIDER PRO 3D -->
 <section class="pro-slider">
-  <h2 class="title-pro" style="color:var(--gold); font-size:3rem;">Expérience Visuelle 3D</h2>
+  <h2 class="title-pro">Expérience Visuelle 3D</h2>
   <div class="slider-track">
     <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600" alt="plat 1">
     <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600" alt="plat 2">
@@ -379,17 +512,22 @@
     <h2 class="form-title"><i class="fas fa-crown" style="margin-right:15px;"></i> Commande d'Exception</h2>
     <form id="masterOrderForm">
       <div class="form-grid-2">
-        <div class="input-group"><label><i class="fas fa-user"></i> Nom complet</label><input type="text" placeholder="M. / Mme" required></div>
-        <div class="input-group"><label><i class="fas fa-envelope"></i> Email</label><input type="email" placeholder="contact@domaine.com" required></div>
-        <div class="input-group"><label><i class="fas fa-map-pin"></i> Adresse (domicile)</label><input type="text" placeholder="N° et rue" required></div>
-        <div class="input-group"><label><i class="fas fa-city"></i> Ville</label><input type="text" placeholder="Paris, Cannes..." required></div>
-        <div class="input-group"><label><i class="fas fa-mail-bulk"></i> Code postal</label><input type="text" placeholder="75008" required></div>
-        <div class="input-group"><label><i class="fas fa-phone"></i> Téléphone</label><input type="tel" placeholder="+33 6 ..." required></div>
+        <div class="input-group"><label><i class="fas fa-user"></i> Nom complet</label><input type="text" placeholder="M. / Mme" required id="fullName"></div>
+        <div class="input-group"><label><i class="fas fa-envelope"></i> Email</label><input type="email" placeholder="contact@domaine.com" required id="email"></div>
+        <div class="input-group"><label><i class="fas fa-map-pin"></i> Adresse (domicile)</label><input type="text" placeholder="N° et rue" required id="address"></div>
+        <div class="input-group"><label><i class="fas fa-city"></i> Ville</label><input type="text" placeholder="Paris, Cannes..." required id="city"></div>
+        <div class="input-group"><label><i class="fas fa-mail-bulk"></i> Code postal</label><input type="text" placeholder="75008" required id="zip"></div>
+        <div class="input-group"><label><i class="fas fa-phone"></i> Téléphone</label><input type="tel" placeholder="+33 6 ..." required id="phone"></div>
         <div class="input-group full-width"><label><i class="fas fa-utensils"></i> Plat / Menu sélection</label>
-          <select><option>Menu Dégustation Impérial</option><option>Homard Bleu & Cristal</option><option>Filet Wagyu & Truffe</option><option>Menu Végétal Prestige</option></select>
+          <select id="menuSelect">
+            <option>Menu Dégustation Impérial</option>
+            <option>Homard Bleu & Cristal</option>
+            <option>Filet Wagyu & Truffe</option>
+            <option>Menu Végétal Prestige</option>
+          </select>
         </div>
         <div class="input-group full-width"><label><i class="fas fa-comment-dots"></i> Commentaires & souhaits</label>
-          <textarea placeholder="Allergies, message pour le chef, occasion spéciale..."></textarea>
+          <textarea placeholder="Allergies, message pour le chef, occasion spéciale..." id="comments"></textarea>
         </div>
       </div>
       <div style="text-align:center;">
@@ -407,20 +545,38 @@
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
-  AOS.init({ duration: 1200, once: false, mirror: false });
+  AOS.init({ duration: 1200, once: false, mirror: false, offset: 100 });
 
-  // Navbar effet
+  // Navbar effet scroll
   window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    const navbar = document.getElementById('navbar');
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
   });
 
-  // Gestion formulaire commande
+  // Gestion formulaire commande avec validation légère
   document.getElementById('masterOrderForm').addEventListener('submit', (e) => {
     e.preventDefault();
+    const nom = document.getElementById('fullName')?.value.trim();
+    const email = document.getElementById('email')?.value.trim();
+    if (!nom || !email) {
+      alert("Veuillez remplir au moins votre nom et email pour finaliser la commande.");
+      return;
+    }
     alert("✨ Votre commande a été reçue avec succès. Un membre de L'Empire vous contactera pour confirmer les détails. ✨");
+    // Optionnel : reset du formulaire
+    // e.target.reset();
   });
 
-  // Effet 3D supplémentaire sur les cartes au survol (déjà dans CSS)
+  // Petite optimisation : éviter que le slider ne provoque un overflow horizontal
+  const sliderTrack = document.querySelector('.slider-track');
+  if (sliderTrack) {
+    sliderTrack.addEventListener('mouseenter', () => {
+      sliderTrack.style.animationPlayState = 'paused';
+    });
+    sliderTrack.addEventListener('mouseleave', () => {
+      sliderTrack.style.animationPlayState = 'running';
+    });
+  }
 </script>
 </body>
 </html>
